@@ -1,3 +1,5 @@
+var btnSave = $('.save');
+
 var datetime = null,
         date = null;
 
@@ -10,4 +12,9 @@ $(document).ready(function(){
     datetime = $('#currentDay')
     update();
     setInterval(update, 1000);
+});
+
+$('.save').click(function(){
+    console.log(`a click`);
+    console.log(this);
 });
