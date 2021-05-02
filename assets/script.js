@@ -1,4 +1,6 @@
 var btnSave = $('.save');
+var currentHour = parseInt(moment().format('H'));
+console.log(currentHour);
 
 var datetime = null,
         date = null;
@@ -6,12 +8,13 @@ var datetime = null,
 var update = function () {
     date = moment(new Date())
     datetime.html(date.format('dddd, MMMM Do YYYY'));
-   };
+       };
 
 $(document).ready(function(){
     datetime = $('#currentDay')
     update();
     setInterval(update, 1000);
+
 });
 
 $('.save').click(function(){
@@ -33,13 +36,43 @@ $('.save').click(function(){
 function loadSchedule(){
     schedule = JSON.parse(localStorage.getItem('schedule'));
     console.log(schedule);
-    $('#0900').text(schedule.nineAm);
-    $('#1000').text(schedule.tenAm);
-    $('#1100').text(schedule.elevenAm);
-    $('#1200').text(schedule.noon);
-    $('#1300').text(schedule.onepm);
-    $('#1400').text(schedule.twoPm);
-    $('#1500').text(schedule.threePm);
-    $('#1600').text(schedule.fourPm);
-    $('#1700').text(schedule.fivePm);
+    $('#09').text(schedule.nineAm);
+    $('#10').text(schedule.tenAm);
+    $('#11').text(schedule.elevenAm);
+    $('#12').text(schedule.noon);
+    $('#13').text(schedule.onepm);
+    $('#14').text(schedule.twoPm);
+    $('#15').text(schedule.threePm);
+    $('#16').text(schedule.fourPm);
+    $('#17').text(schedule.fivePm);
+}
+
+function colorCheck() {
+
+    for (let i = 0; i < $('textarea').length; i++) {
+        if (currentHour == $('textarea')[i].id) {
+            console.log($('textarea')[i]),
+            test = ($('textarea')[i].id);
+            console.log('test var', test);
+            $('#'+test).addClass("bg-warning");
+            
+           
+            
+            
+            
+           
+
+                       
+        } else if (currentHour >$('textarea')[i].id) {  
+            console.log('willbecome gray'); 
+            test = ($('textarea')[i].id);
+            console.log('test var', test);
+            $('#'+test).addClass("bg-secondary text-white")        
+        } else if (currentHour < $('textarea')[i].id) {
+         console.log(`this will become green`);
+         test = ($('textarea')[i].id);
+            console.log('test var', test);
+            $('#'+test).addClass("bg-success")
+        }
+    }
 }
