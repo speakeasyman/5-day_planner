@@ -25,7 +25,7 @@ $('.save').click(function(){
         tenAm: $('textarea')[1].value,
         elevenAm: $('textarea')[2].value,
         noon: $('textarea')[3].value,
-        onepm: $('textarea')[4].value,
+        onePm: $('textarea')[4].value,
         twoPm: $('textarea')[5].value,
         threePm: $('textarea')[6].value,
         fourPm: $('textarea')[7].value,
@@ -44,7 +44,7 @@ function loadSchedule(){
     $('#10').text(schedule.tenAm);
     $('#11').text(schedule.elevenAm);
     $('#12').text(schedule.noon);
-    $('#13').text(schedule.onepm);
+    $('#13').text(schedule.onePm);
     $('#14').text(schedule.twoPm);
     $('#15').text(schedule.threePm);
     $('#16').text(schedule.fourPm);
@@ -54,18 +54,18 @@ function loadSchedule(){
 // against the textarea ID. I made each ID the hour in 24hr format, so depending on if it's present, past, or future the
 // appropiate class will be added using jquery. 
 function colorCheck() {
-    var currentHour = parseInt(moment().format('H'));
-    
+    var currentHour = parseInt(moment().format('H'));   
+     
     for (let i = 0; i < $('textarea').length; i++) {
         if (currentHour == $('textarea')[i].id) {
             test = ($('textarea')[i].id);
-            $('#'+test).addClass("present");                 
+            $('#'+ test).addClass("present");                 
         } else if (currentHour > $('textarea')[i].id) {  
             test = ($('textarea')[i].id);
-            $('#'+test).addClass("past")        
+            $('#'+ test).addClass("past")        
         } else if (currentHour < $('textarea')[i].id) {
          test = ($('textarea')[i].id);
-            $('#'+test).addClass("future")
+            $('#'+ test).addClass("future")
         }
     }
 }
