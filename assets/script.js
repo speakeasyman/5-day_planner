@@ -36,19 +36,24 @@ $('.save').click(function(){
     });
 
 // This loads the schedule. It takes whever is local storage, and fills in the textarea accordingly. The textarea
-// IDs were set as what the hour was in military time.
+// IDs were set as what the hour was in military time. Added an if else statement just
+// so there would be no errors when there is not a schedule in the localstorage
 function loadSchedule(){
     schedule = JSON.parse(localStorage.getItem('schedule'));
-    console.log(schedule);
-    $('#09').text(schedule.nineAm);
-    $('#10').text(schedule.tenAm);
-    $('#11').text(schedule.elevenAm);
-    $('#12').text(schedule.noon);
-    $('#13').text(schedule.onePm);
-    $('#14').text(schedule.twoPm);
-    $('#15').text(schedule.threePm);
-    $('#16').text(schedule.fourPm);
-    $('#17').text(schedule.fivePm);
+    if (schedule === null) {
+        return        
+    } else {
+        $('#09').text(schedule.nineAm);
+        $('#10').text(schedule.tenAm);
+        $('#11').text(schedule.elevenAm);
+        $('#12').text(schedule.noon);
+        $('#13').text(schedule.onePm);
+        $('#14').text(schedule.twoPm);
+        $('#15').text(schedule.threePm);
+        $('#16').text(schedule.fourPm);
+        $('#17').text(schedule.fivePm);
+        
+    }
 }
 // This changes the colors of the text areas. It uses the for loop, to go and  check the current time in hours
 // against the textarea ID. I made each ID the hour in 24hr format, so depending on if it's present, past, or future the
