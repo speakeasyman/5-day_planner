@@ -1,22 +1,24 @@
+// Global Variables, not as many as usual
+
 var btnSave = $('.save');
-
-
 var datetime = null,
 date = null;
 
+// Update function, grabs the current time
 var update = function () {
     date = moment(new Date())
     datetime.html(date.format('dddd, MMMM Do YYYY'));
 };
-
+// This is the interval, that every 15 mins should check the time, and recolor the time squares if a new hour is reached
 $(document).ready(function(){
     datetime = $('#currentDay')
     update();
     colorCheck();
-    setInterval(update, 1000*60*15);
-    
+    setInterval(update, 1000*60*15);    
 });
-
+// This is the button listener. It treats the save buttons are fungible, because that should be more intuitive for the
+// user. It would be shame if they put in multiple thing for the day, and it wiped all but one.
+// It just takes all the text values and places it in local storage, then reloads the page
 $('.save').click(function(){
     var schedule = {
         nineAm: $('textarea')[0].value,
@@ -29,10 +31,12 @@ $('.save').click(function(){
         fourPm: $('textarea')[7].value,
         fivePm: $('textarea')[8].value,
     }
-    localStorage.setItem('schedule', JSON.stringify(schedule));  
-    console.log(schedule);    
-});
+    localStorage.setItem('schedule', JSON.stringify(schedule));
+    location.reload();  
+    });
 
+// This loads the schedule. It takes whever is local storage, and fills in the textarea accordingly. The textarea
+// IDs were set as what the hour was in military time.
 function loadSchedule(){
     schedule = JSON.parse(localStorage.getItem('schedule'));
     console.log(schedule);
@@ -46,33 +50,21 @@ function loadSchedule(){
     $('#16').text(schedule.fourPm);
     $('#17').text(schedule.fivePm);
 }
-
+// This changes the colors of the text areas. It uses the for loop, to go and  check the current time in hours
+// against the textarea ID. I made each ID the hour in 24hr format, so depending on if it's present, past, or future the
+// appropiate class will be added using jquery. 
 function colorCheck() {
     var currentHour = parseInt(moment().format('H'));
     
     for (let i = 0; i < $('textarea').length; i++) {
         if (currentHour == $('textarea')[i].id) {
-            console.log($('textarea')[i]),
             test = ($('textarea')[i].id);
-            console.log('test var', test);
-            $('#'+test).addClass("present");
-            
-           
-            
-            
-            
-           
-
-                       
-        } else if (currentHour >$('textarea')[i].id) {  
-            console.log('willbecome gray'); 
+            $('#'+test).addClass("present");                 
+        } else if (currentHour > $('textarea')[i].id) {  
             test = ($('textarea')[i].id);
-            console.log('test var', test);
             $('#'+test).addClass("past")        
         } else if (currentHour < $('textarea')[i].id) {
-         console.log(`this will become green`);
          test = ($('textarea')[i].id);
-            console.log('test var', test);
             $('#'+test).addClass("future")
         }
     }
