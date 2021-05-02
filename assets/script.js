@@ -1,20 +1,20 @@
 var btnSave = $('.save');
-var currentHour = parseInt(moment().format('H'));
-console.log(currentHour);
+
 
 var datetime = null,
-        date = null;
+date = null;
 
 var update = function () {
     date = moment(new Date())
     datetime.html(date.format('dddd, MMMM Do YYYY'));
-       };
+};
 
 $(document).ready(function(){
     datetime = $('#currentDay')
     update();
-    setInterval(update, 1000);
-
+    colorCheck();
+    setInterval(update, 1000*60*15);
+    
 });
 
 $('.save').click(function(){
@@ -30,7 +30,7 @@ $('.save').click(function(){
         fivePm: $('textarea')[8].value,
     }
     localStorage.setItem('schedule', JSON.stringify(schedule));  
-        console.log(schedule);    
+    console.log(schedule);    
 });
 
 function loadSchedule(){
@@ -48,13 +48,14 @@ function loadSchedule(){
 }
 
 function colorCheck() {
-
+    var currentHour = parseInt(moment().format('H'));
+    
     for (let i = 0; i < $('textarea').length; i++) {
         if (currentHour == $('textarea')[i].id) {
             console.log($('textarea')[i]),
             test = ($('textarea')[i].id);
             console.log('test var', test);
-            $('#'+test).addClass("bg-warning");
+            $('#'+test).addClass("present");
             
            
             
@@ -67,12 +68,12 @@ function colorCheck() {
             console.log('willbecome gray'); 
             test = ($('textarea')[i].id);
             console.log('test var', test);
-            $('#'+test).addClass("bg-secondary text-white")        
+            $('#'+test).addClass("past")        
         } else if (currentHour < $('textarea')[i].id) {
          console.log(`this will become green`);
          test = ($('textarea')[i].id);
             console.log('test var', test);
-            $('#'+test).addClass("bg-success")
+            $('#'+test).addClass("future")
         }
     }
 }
