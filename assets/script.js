@@ -15,6 +15,12 @@ $(document).ready(function(){
 });
 
 $('.save').click(function(){
-    console.log(`a click`);
-    console.log(this);
+    var schedule = {
+        nine: $('textarea')[0].value,
+        ten: $('textarea')[1].value,
+    }
+    
+
+    console.log(schedule);
+    
 });
